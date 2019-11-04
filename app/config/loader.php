@@ -6,10 +6,8 @@ $loader
     ->registerNamespaces([
         'Controllers' => $config->application->controllersDir,
         'Models' => $config->application->modelsDir,
-        'Library' => $config->application->libraryDir,
-        'Helpers' => $config->application->helpersDir
+        'Library' => $config->application->libraryDir
     ])
     ->register();
 
-//composer autoloader
 require $config->application->vendorDir . 'autoload.php';

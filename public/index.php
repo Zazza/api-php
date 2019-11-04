@@ -45,12 +45,13 @@ try {
         pinba_script_name_set($_SERVER['REQUEST_URI']);
     }
 
-    /**
-     * Handle the request
-     */
-    $application = new \Phalcon\Mvc\Application($di);
-
-    echo $application->handle()->getContent();
+    try {
+        $application = new \Phalcon\Mvc\Application($di);
+        $response = $application->handle();
+        $response->send();
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
 } catch (\Exception $e) {
     echo $e->getMessage() . '<br>';
     echo '<pre>' . $e->getTraceAsString() . '</pre>';

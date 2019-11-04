@@ -1,19 +1,8 @@
 {
     "require": {
-        "phalcon/incubator": "v3.1.1",
-        "swiftmailer/swiftmailer": "v5.4.1",
-        "touhonoob/rate-limit": "1.2.0",
-        "doctrine/doctrine-migrations-bundle": "1.2.0",
-        "lavary/crunz": "v1.4.8",
-        "phpgangsta/googleauthenticator": "dev-master",
-        "denpa/php-bitcoinrpc": "^2.0",
-        "cboden/ratchet": "0.4.1",
-        "textalk/websocket": "1.0.*",
-        "fzaninotto/faker": "v1.8.0",
-        "kesar/ethereum-php": "dev-master"
+        "phalcon/incubator": "v3.4.x"
     },
     "require-dev": {
-        "codeception/codeception": "~2.2",
-        "theseer/phpdox": "0.12.0"
+
     }
 }

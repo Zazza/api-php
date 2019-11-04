@@ -7,49 +7,38 @@
  */
 namespace Controllers;
 
-use Library\User\User;
-use Phalcon\Mvc\Url;
+use MongoDB\Driver\Manager;
+use Phalcon\Db\Adapter\MongoDB\Database;
+use Phalcon\Mvc\Controller;
 
-class IndexController extends ControllerBase
+/**
+ * Class IndexController
+ * @package Controllers
+ *
+ * POST /api/v1/document/ - credting draft of the document
+ * GET /api/v1/document/{id} - getting document by id
+ * PATCH /api/v1/document/{id} - edit document
+ * POST /api/v1/document/{id}/publish - publish document
+ * GET /api/v1/document/?page=1&perPage=20 - get last document with pagination, sorting (new added are on the top)
+ * If document is not found, 404 NOT Found must be returned
+ * If document is already published, and user tries to update it, return 400.
+ * Try to publish arelady published document should return 200
+ * PATCH is sending in the body of JSON document, all fields except payload are ignored. If payload is not sent/defined, then return 400.
+ */
+class IndexController extends Controller
 {
-
     public function indexAction()
     {
-        if (!$this->User) {
-            $this->response->redirect('/session/login');
-        } else {
-            $Url = new Url();
+        $Api = new \Models\Api();
+        $Api->setPayload(['content' => 'data']);
+        if (!$Api->save()) {
+            print_r($Api->getMessages());
+        }
 
-            if ($this->User->getRvUsersAdmin()) {
-                $redirectURL = $Url->get('/admin/logs');
-
-                return $this->response->redirect($redirectURL);
-            }
-
-            if (!$this->User->getRvUsersLastAction()) {
-                $redirectURL = $Url->get('/campaign');
-
-                return $this->response->redirect($redirectURL);
-            }
-
-            switch ($this->User->getRvUsersLastAction()->action) {
-                case User::ACTION_ADVERTISER:
-                    $redirectURL = $Url->get('/campaign');
-                    break;
-                case User::ACTION_WEBMASTER:
-                    $redirectURL = $Url->get('/website');
-                    break;
-                default:
-                    $redirectURL = $Url->get('/campaign');
-            }
-
-            return $this->response->redirect($redirectURL);
+        $ApiList = \Models\Api::find();
+        /** @var \Models\Api $Api */
+        foreach ($ApiList as $Api) {
+            print_r($Api->toArray()); echo "<br>";
         }
     }
-
-    public function notfoundAction()
-    {
-        return $this->view->pick('template/404');
-    }
 }
-
