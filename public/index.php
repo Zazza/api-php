@@ -23,7 +23,7 @@ try {
     /**
      * Handle routes
      */
-    include APP_PATH . '/config/router.php';
+    //include APP_PATH . '/config/router.php';
 
     /**
      * Read services
@@ -40,18 +40,9 @@ try {
      */
     include APP_PATH . '/config/loader.php';
 
-    //configure Pinba
-    if (function_exists('pinba_script_name_set')) {
-        pinba_script_name_set($_SERVER['REQUEST_URI']);
-    }
-
-    try {
-        $application = new \Phalcon\Mvc\Application($di);
-        $response = $application->handle();
-        $response->send();
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
+    $application = new \Phalcon\Mvc\Application($di);
+    $response = $application->handle();
+    $response->send();
 } catch (\Exception $e) {
     echo $e->getMessage() . '<br>';
     echo '<pre>' . $e->getTraceAsString() . '</pre>';

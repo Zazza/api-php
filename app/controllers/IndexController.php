@@ -7,8 +7,6 @@
  */
 namespace Controllers;
 
-use MongoDB\Driver\Manager;
-use Phalcon\Db\Adapter\MongoDB\Database;
 use Phalcon\Mvc\Controller;
 
 /**

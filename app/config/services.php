@@ -10,13 +10,20 @@ $di->setShared('config', $config);
  * The URL component is used to generate all kind of urls in the application
  */
 $di->setShared('url', function () {
-    $config = $this->getConfig();
-
     $url = new UrlResolver();
-    $url->setBaseUri($config->site->baseUri);
+    $url->setBaseUri('/');
 
     return $url;
 });
+
+$di->set(
+    'router',
+    function () {
+        require __DIR__ . '/router.php';
+
+        return $router;
+    }
+);
 
 $di->set('dispatcher', function () use ($di) {
     $eventsManager = $di->getShared('eventsManager');
