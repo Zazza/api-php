@@ -11,12 +11,8 @@ return new \Phalcon\Config([
         'appDir'         => APP_PATH . '/',
         'controllersDir' => APP_PATH . '/controllers/',
         'modelsDir'      => APP_PATH . '/models/',
-        'viewsDir'       => APP_PATH . '/views/',
         'libraryDir'     => APP_PATH . '/library/',
-        'helpersDir'     => APP_PATH . '/helpers/',
         'cacheDir'       => BASE_PATH . '/var/cache/',
         'vendorDir'      => BASE_PATH . '/vendor/',
-        'uploadDir'      => BASE_PATH . '/upload/',
-        'logDir'         => BASE_PATH . '/var/log/'
     ]
 ]);

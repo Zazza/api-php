@@ -7,10 +7,14 @@
  */
 namespace Models;
 
+use Library\Exception\DocumentStatusException;
 use Phalcon\Mvc\Model;
 
-class Api extends Model
+class Document extends Model
 {
+    /** @var int */
+    private $id;
+
     /** @var string */
     private $uuid;
 
@@ -23,9 +27,9 @@ class Api extends Model
     /** @var string */
     private $modifyAt;
 
-    public function initialize()
+    public function getSource()
     {
-        $this->setSource('robots');
+        return 'document';
     }
 
     public function beforeValidationOnCreate()
@@ -37,6 +41,14 @@ class Api extends Model
     public function beforeUpdate()
     {
         $this->modifyAt = new \Phalcon\Db\RawValue("now()");
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -77,5 +89,25 @@ class Api extends Model
     public function getModifyAt()
     {
         return $this->modifyAt;
+    }
+
+    public function isDraft()
+    {
+        $DocumentDraft = new \Models\DocumentDraft();
+        $DocumentDraft->setDocumentId($this->id);
+    }
+
+    public function isPublish()
+    {
+        $DocumentDraft = \Models\DocumentDraft::findFirst([
+            'document_ptr_id = :id:',
+            'bind' => ['id' => $this->id]
+        ]);
+        if (!$DocumentDraft->delete()) {
+            throw new DocumentStatusException();
+        }
+
+        $DocumentPublish = new \Models\DocumentPublish();
+        $DocumentPublish->setDocumentId($this->getId());
     }
 }
