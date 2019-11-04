@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":126:{a:2:{s:7:"defects";a:1:{s:27:"DocumentTest::testAddRecord";i:4;}s:5:"times";a:1:{s:27:"DocumentTest::testAddRecord";d:0.015;}}}
